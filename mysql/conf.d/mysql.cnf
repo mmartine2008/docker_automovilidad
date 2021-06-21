@@ -27,12 +27,12 @@
 # http://dev.mysql.com/doc/mysql/en/server-system-variables.html
 
 [client]
-default-character-set=utf8
+default-character-set=latin1
 
 [mysql]
-default-character-set=utf8
+default-character-set=latin1
 
 [mysqld]
-collation-server = utf8_unicode_ci
-character-set-server = utf8
+collation-server = latin1_swedish_ci
+character-set-server = latin1
 default_authentication_plugin = mysql_native_password
