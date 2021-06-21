@@ -1,0 +1,47 @@
+version: '3'
+services:
+  web:
+    image: mydocker/apache:2.0.0.most
+    ports:
+      - 8080:80
+    volumes:
+     - /home/mariano/work/most/proyecto_automovilidad/automovilidad/praclab:/var/www/html
+    depends_on:
+      - msqlserver
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+      - SERVICE_PORTS=80
+      - LANG=es_AR.utf8
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          memory: 512m 
+  mysqldb:
+    image: "mysql"
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - /media/mariano/backup/most/automovilidad/volume:/var/lib/mysql
+      - /media/mariano/backup/most/automovilidad/tmp:/tmp
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: tudai
+  # msqlserver:
+  #   image: mcr.microsoft.com/mssql/server:2017-latest
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=sysdba789
+  #   ports:
+  #     - 1433:1433
+  #   volumes:
+  #     - /media/mariano/backup/most/automovilidad/volume:/var/opt/mssql
+  #     - /media/mariano/backup/most/automovilidad/tmp:/tmp
+    
